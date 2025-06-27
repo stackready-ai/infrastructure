@@ -1,0 +1,35 @@
+environment: prod
+
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/stackready-ai/infrastructure
+    targetRevision: HEAD
+  project: default
+
+applications:
+  nifi:
+    enabled: true
+    name: apache-nifi    namespace: nifi    path: applications/overlays/prod
+    
+  gitlab:
+    enabled: true
+    name: gitlab    namespace: gitlab    path: applications/overlays/prod
+    
+  kubeflow:
+    enabled: true
+    name: kubeflow    namespace: kubeflow    path: applications/overlays/prod
+    
+  influxdb:
+    enabled: true
+    name: influxdb    namespace: influxdb    path: applications/overlays/prod
+    
+  librechat:
+    enabled: true
+    name: librechat    namespace: librechat    path: applications/overlays/prod
+    
+  loadbalancer:
+    enabled: true
+    name: loadbalancer    namespace: kube-system
+    path: applications/overlays/prod

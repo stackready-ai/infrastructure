@@ -1,0 +1,22 @@
+{{- if .Values.applications.gitlab.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.applications.gitlab.name }}
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ .Values.applications.gitlab.namespace }}
+    server: {{ .Values.spec.destination.server }}
+  project: {{ .Values.spec.project }}
+  source:
+    path: {{ .Values.applications.gitlab.path }}
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+  {{- if .Values.applications.gitlab.syncPolicy }}
+  syncPolicy:
+    {{- toYaml .Values.applications.gitlab.syncPolicy | nindent 4 }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: loadbalancer-values
+data:
+  values.yaml:  < /dev/null | 
+    loadbalancer:
+      name: stackready-staging-lb
+      namespace: kube-system
+      
+      service:
+        annotations:
+          service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+          service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"

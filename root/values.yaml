@@ -66,3 +66,15 @@ applications:
         selfHeal: true
       syncOptions:
       - CreateNamespace=true
+    
+  loadbalancer:
+    enabled: true
+    name: loadbalancer
+    namespace: kube-system
+    path: applications/loadbalancer
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true

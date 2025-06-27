@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nifi-values
+data:
+  values.yaml: |
+    nifi:
+      replicaCount: 1
+      
+      resources:
+        limits:
+          cpu: 1
+          memory: 2Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      
+      persistence:
+        size: 4Gi
+      
+      ingress:
+        hosts:
+          - nifi-dev.example.com
+        tls:
+          - secretName: nifi-dev-tls
+            hosts:
+              - nifi-dev.example.com
+      
+      properties:
+        webProxyHost: nifi-dev.example.com

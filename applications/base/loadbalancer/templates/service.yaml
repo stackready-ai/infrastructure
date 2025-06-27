@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.loadbalancer.name }}
+  namespace: {{ .Values.loadbalancer.namespace }}
+  {{- with .Values.loadbalancer.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.loadbalancer.service.type }}
+  {{- if .Values.loadbalancer.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.loadbalancer.externalTrafficPolicy }}
+  {{- end }}
+  {{- if .Values.loadbalancer.sessionAffinity }}
+  sessionAffinity: {{ .Values.loadbalancer.sessionAffinity }}
+  {{- end }}
+  ports:
+  {{- range .Values.loadbalancer.service.ports }}
+    - name: {{ .name }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+      protocol: {{ .protocol }}
+  {{- end }}
+  selector:
+    {{- toYaml .Values.loadbalancer.service.selector | nindent 4 }}

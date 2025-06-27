@@ -1,0 +1,22 @@
+{{- if .Values.applications.nifi.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.applications.nifi.name }}
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ .Values.applications.nifi.namespace }}
+    server: {{ .Values.spec.destination.server }}
+  project: {{ .Values.spec.project }}
+  source:
+    path: {{ .Values.applications.nifi.path }}
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+  {{- if .Values.applications.nifi.syncPolicy }}
+  syncPolicy:
+    {{- toYaml .Values.applications.nifi.syncPolicy | nindent 4 }}
+  {{- end }}
+{{- end }}

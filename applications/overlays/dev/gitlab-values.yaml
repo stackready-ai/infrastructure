@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitlab-values
+data:
+  values.yaml: |
+    gitlab:
+      global:
+        hosts:
+          domain: gitlab-dev.example.com
+        
+        gitaly:
+          persistence:
+            size: 10Gi
+        
+        postgresql:
+          persistence:
+            size: 4Gi
+        
+        redis:
+          persistence:
+            size: 2Gi
+      
+      gitlab-runner:
+        runners:
+          config: |
+            [[runners]]
+              [runners.kubernetes]
+              namespace = "gitlab-dev"
+              image = "alpine:latest"

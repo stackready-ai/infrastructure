@@ -1,0 +1,22 @@
+{{- if .Values.applications.librechat.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.applications.librechat.name }}
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ .Values.applications.librechat.namespace }}
+    server: {{ .Values.spec.destination.server }}
+  project: {{ .Values.spec.project }}
+  source:
+    path: {{ .Values.applications.librechat.path }}
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+  {{- if .Values.applications.librechat.syncPolicy }}
+  syncPolicy:
+    {{- toYaml .Values.applications.librechat.syncPolicy | nindent 4 }}
+  {{- end }}
+{{- end }}
