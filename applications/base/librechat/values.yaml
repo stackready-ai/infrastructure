@@ -82,7 +82,7 @@ librechat:
       database: LibreChat
     persistence:
       enabled: true
-      storageClass: "standard"
+      storageClass: "do-block-storage"
       accessMode: ReadWriteOnce
       size: 10Gi
 
@@ -136,7 +136,7 @@ librechat:
     url: "http://librechat-meilisearch:7700"
     persistence:
       enabled: true
-      storageClass: "standard"
+      storageClass: "do-block-storage"
       size: 5Gi
 
   # RAG API Configuration  
@@ -148,7 +148,7 @@ librechat:
     url: "http://librechat-rag:8000"
     persistence:
       enabled: true
-      storageClass: "standard"
+      storageClass: "do-block-storage"
       size: 5Gi
     env:
       VECTOR_DB: "chroma"
@@ -164,7 +164,7 @@ librechat:
       url: "http://librechat-vectordb:8000"
       persistence:
         enabled: true
-        storageClass: "standard"
+        storageClass: "do-block-storage"
         size: 5Gi
 
   # AI Endpoints Configuration
@@ -221,13 +221,13 @@ librechat:
   persistence:
     uploads:
       enabled: true
-      storageClass: "standard"
+      storageClass: "do-block-storage"
       accessMode: ReadWriteOnce
       size: 10Gi
       mountPath: /app/client/public/uploads
     logs:
       enabled: true
-      storageClass: "standard"
+      storageClass: "do-block-storage"
       accessMode: ReadWriteOnce
       size: 5Gi
       mountPath: /app/api/logs
