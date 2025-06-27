@@ -4,13 +4,13 @@ kind: Kustomization
 namespace: prod
 namePrefix: prod-
 
-bases:
+resources:
   - ../../base
 
 commonLabels:
   environment: prod
   
-patchesStrategicMerge:
+patches:
   - nifi-values.yaml
   - gitlab-values.yaml
   - kubeflow-values.yaml

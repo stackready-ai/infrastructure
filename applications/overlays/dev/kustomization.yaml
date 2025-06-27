@@ -4,13 +4,13 @@ kind: Kustomization
 namespace: dev
 namePrefix: dev-
 
-bases:
+resources:
   - ../../base
 
 commonLabels:
   environment: dev
   
-patchesStrategicMerge:
+patches:
   - nifi-values.yaml
   - gitlab-values.yaml
   - kubeflow-values.yaml
