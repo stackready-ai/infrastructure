@@ -1,0 +1,22 @@
+{{- if .Values.applications.kubeflow.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.applications.kubeflow.name }}
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ .Values.applications.kubeflow.namespace }}
+    server: {{ .Values.spec.destination.server }}
+  project: {{ .Values.spec.project }}
+  source:
+    path: {{ .Values.applications.kubeflow.path }}
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+  {{- if .Values.applications.kubeflow.syncPolicy }}
+  syncPolicy:
+    {{- toYaml .Values.applications.kubeflow.syncPolicy | nindent 4 }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,51 @@
+nifi:
+  replicaCount: 1
+  
+  image:
+    repository: apache/nifi
+    tag: "1.23.2"
+    pullPolicy: IfNotPresent
+  
+  service:
+    type: LoadBalancer
+    httpPort: 8080
+    httpsPort: 8443
+  
+  persistence:
+    enabled: true
+    storageClass: "standard"
+    accessMode: ReadWriteOnce
+    size: 8Gi
+  
+  resources:
+    limits:
+      cpu: 2
+      memory: 4Gi
+    requests:
+      cpu: 1
+      memory: 2Gi
+  
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: nifi.example.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: nifi-tls
+        hosts:
+          - nifi.example.com
+  
+  auth:
+    singleUser:
+      username: admin
+      password: admin123456
+  
+  properties:
+    webProxyHost: nifi.example.com
+    isNode: false
+    needClientAuth: false

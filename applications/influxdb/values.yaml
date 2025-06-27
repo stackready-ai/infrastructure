@@ -1,0 +1,86 @@
+influxdb2:
+  image:
+    repository: influxdb
+    tag: "2.7.3"
+    pullPolicy: IfNotPresent
+  
+  adminUser:
+    organization: "primary"
+    bucket: "default"
+    user: "admin"
+    retention_policy: "0s"
+    password: "influxdb123456"
+    token: "super-secret-auth-token"
+  
+  persistence:
+    enabled: true
+    storageClass: "standard"
+    accessMode: ReadWriteOnce
+    size: 50Gi
+    mountPath: /var/lib/influxdb2
+  
+  service:
+    type: ClusterIP
+    port: 8086
+    targetPort: 8086
+    annotations: {}
+  
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hostname: influxdb.example.com
+    tls: true
+    secretName: influxdb-tls
+  
+  resources:
+    limits:
+      memory: 2Gi
+      cpu: 2
+    requests:
+      memory: 512Mi
+      cpu: 0.5
+  
+  env:
+    - name: INFLUXDB_DATA_ENGINE
+      value: tsm1
+    - name: INFLUXDB_REPORTING_DISABLED
+      value: "true"
+    - name: INFLUXDB_DATA_QUERY_LOG_ENABLED
+      value: "false"
+    - name: INFLUXDB_HTTP_LOG_ENABLED
+      value: "true"
+    - name: INFLUXDB_CONTINUOUS_QUERIES_LOG_ENABLED
+      value: "false"
+  
+  config:
+    http:
+      bind-address: ":8086"
+      auth-enabled: true
+      flux-enabled: true
+      log-enabled: true
+      write-tracing: false
+      https-enabled: false
+    
+    limits:
+      max-concurrent-queries: 0
+      max-query-memory: 0
+      max-values-per-tag: 100000
+      max-series-per-database: 1000000
+      max-tag-values-per-database: 100000
+  
+  pdb:
+    create: true
+    minAvailable: 1
+  
+  backup:
+    enabled: false
+    schedule: "0 0 * * *"
+    startingDeadlineSeconds: ""
+    concurrencyPolicy: Forbid
+    historyLimit: 3
+    successfulJobsHistoryLimit: 1
+    
+  monitoring:
+    enabled: false

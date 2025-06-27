@@ -1,0 +1,10 @@
+apiVersion: v2
+name: influxdb
+description: A Helm chart for InfluxDB 2.x
+type: application
+version: 0.1.0
+appVersion: "2.7.3"
+dependencies:
+  - name: influxdb2
+    version: "2.1.1"
+    repository: "https://helm.influxdata.com/"

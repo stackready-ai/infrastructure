@@ -1,0 +1,68 @@
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/your-org/your-repo
+    targetRevision: HEAD
+  project: default
+
+applications:
+  nifi:
+    enabled: true
+    name: apache-nifi
+    namespace: nifi
+    path: argocd-apps/applications/nifi
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true
+    
+  gitlab:
+    enabled: true
+    name: gitlab
+    namespace: gitlab
+    path: argocd-apps/applications/gitlab
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true
+    
+  kubeflow:
+    enabled: true
+    name: kubeflow
+    namespace: kubeflow
+    path: argocd-apps/applications/kubeflow
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true
+    
+  influxdb:
+    enabled: true
+    name: influxdb
+    namespace: influxdb
+    path: argocd-apps/applications/influxdb
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true
+    
+  librechat:
+    enabled: true
+    name: librechat
+    namespace: librechat
+    path: argocd-apps/applications/librechat
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true

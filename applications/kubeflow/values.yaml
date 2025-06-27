@@ -1,0 +1,97 @@
+global:
+  domain: kubeflow.example.com
+  
+istio:
+  enabled: true
+  gateway:
+    name: kubeflow-gateway
+    
+certManager:
+  enabled: true
+  email: admin@example.com
+  
+dexAuth:
+  enabled: true
+  staticPasswords:
+    - email: "admin@example.com"
+      hash: "$2y$10$2b2cU8CPhOTaGrs1HRQuAueS3wHX9n7fHiFPNASr1If5fwShvXKGm"
+      username: "admin"
+      userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
+      
+centralDashboard:
+  enabled: true
+  image:
+    repository: gcr.io/kubeflow-images-public/centraldashboard
+    tag: v1.8.0
+    
+jupyterWebApp:
+  enabled: true
+  image:
+    repository: gcr.io/kubeflow-images-public/jupyter-web-app
+    tag: v1.8.0
+    
+notebookController:
+  enabled: true
+  image:
+    repository: gcr.io/kubeflow-images-public/notebook-controller
+    tag: v1.8.0
+    
+pipelines:
+  enabled: true
+  persistence:
+    enabled: true
+    size: 20Gi
+    storageClass: standard
+  mysql:
+    enabled: true
+    persistence:
+      enabled: true
+      size: 10Gi
+  minio:
+    enabled: true
+    persistence:
+      enabled: true
+      size: 20Gi
+    defaultBucket:
+      enabled: true
+      name: mlpipeline
+      
+katib:
+  enabled: true
+  mysql:
+    enabled: true
+    persistence:
+      enabled: true
+      size: 10Gi
+      
+kfserving:
+  enabled: true
+  modelmesh:
+    enabled: true
+    
+training:
+  enabled: true
+  pytorchOperator:
+    enabled: true
+  tfOperator:
+    enabled: true
+  mpiOperator:
+    enabled: true
+    
+volumes:
+  enabled: true
+  storageClass: standard
+  
+profileController:
+  enabled: true
+  
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  host: kubeflow.example.com
+  tls:
+    enabled: true
+    secretName: kubeflow-tls

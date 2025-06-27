@@ -1,0 +1,233 @@
+librechat:
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/danny-avila/librechat
+    pullPolicy: IfNotPresent
+    tag: "latest"
+
+  nameOverride: ""
+  fullnameOverride: ""
+
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: ""
+
+  podAnnotations: {}
+
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 1000
+
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    runAsUser: 1000
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    hosts:
+      - host: librechat.example.com
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: librechat-tls
+        hosts:
+          - librechat.example.com
+
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  # MongoDB Configuration
+  mongodb:
+    deploy: true
+    url: "mongodb://librechat-mongodb:27017/LibreChat"
+    auth:
+      enabled: true
+      rootPassword: changeme123
+      username: librechat
+      password: changeme456
+      database: LibreChat
+    persistence:
+      enabled: true
+      storageClass: "standard"
+      accessMode: ReadWriteOnce
+      size: 10Gi
+
+  # Configuration
+  config:
+    # App Configuration
+    appTitle: "LibreChat"
+    host: "0.0.0.0"
+    port: "3080"
+    
+    # Security Keys - IMPORTANT: Change these in production!
+    credsKey: "your-32-char-secret-key-change-me"
+    credsIv: "your-16-char-iv-change-me-please"
+    jwtSecret: "your-jwt-secret-change-me-please"
+    jwtRefreshSecret: "your-jwt-refresh-secret-change"
+    
+    # Session Configuration
+    sessionExpiry: 604800000
+    refreshTokenExpiry: 604800000
+    
+    # Domain Configuration
+    domainClient: "https://librechat.example.com"
+    domainServer: "https://librechat.example.com"
+    
+    # Registration
+    allowRegistration: "true"
+    allowSocialLogin: "false"
+    allowSocialRegistration: "false"
+    
+    # Rate Limiting
+    loginMax: 7
+    loginWindow: 5
+    registerMax: 5
+    registerWindow: 60
+    
+    # Search
+    searchEnabled: "true"
+    meiliMasterKey: "your-meili-master-key-at-least-16-bytes"
+    
+    # File Support
+    fileStrategy: "local"
+    fileSizeMax: 10
+    
+    # Logging
+    debugLogging: "false"
+    debugConsole: "false"
+
+  # MeiliSearch Configuration
+  meilisearch:
+    deploy: true
+    url: "http://librechat-meilisearch:7700"
+    persistence:
+      enabled: true
+      storageClass: "standard"
+      size: 5Gi
+
+  # RAG API Configuration  
+  rag:
+    deploy: true
+    image:
+      repository: ghcr.io/danny-avila/librechat-rag-api
+      tag: latest
+    url: "http://librechat-rag:8000"
+    persistence:
+      enabled: true
+      storageClass: "standard"
+      size: 5Gi
+    env:
+      VECTOR_DB: "chroma"
+      EMBEDDINGS_PROVIDER: "openai"
+      CHUNK_SIZE: "1000"
+      CHUNK_OVERLAP: "200"
+
+  # Vector Database Configuration
+  vectordb:
+    deploy: true
+    type: chroma
+    chroma:
+      url: "http://librechat-vectordb:8000"
+      persistence:
+        enabled: true
+        storageClass: "standard"
+        size: 5Gi
+
+  # AI Endpoints Configuration
+  endpoints:
+    openAI:
+      enabled: false
+      apiKey: ""
+      models:
+        default: ["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo-preview"]
+        
+    azureOpenAI:
+      enabled: false
+      apiKey: ""
+      instanceName: ""
+      apiVersion: "2024-02-15-preview"
+      
+    anthropic:
+      enabled: false
+      apiKey: ""
+      models: ["claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-3-haiku-20240307"]
+      
+    google:
+      enabled: false
+      apiKey: ""
+      models:
+        chat: ["gemini-pro", "gemini-pro-vision"]
+        
+    custom:
+      enabled: false
+      endpoints: []
+
+  # File Upload Configuration
+  fileConfig:
+    endpoints:
+      assistants:
+        fileLimit: 5
+        fileSizeLimit: 10
+        supportedMimeTypes:
+          - "image/.*"
+          - "application/pdf"
+      openAI:
+        disabled: true
+      default:
+        totalSizeLimit: 20
+
+  # Model Configuration
+  modelConfig:
+    deployConfigMap: true
+
+  # Extra Environment Variables
+  extraEnvVars: []
+
+  # Persistence for uploads
+  persistence:
+    uploads:
+      enabled: true
+      storageClass: "standard"
+      accessMode: ReadWriteOnce
+      size: 10Gi
+      mountPath: /app/client/public/uploads
+    logs:
+      enabled: true
+      storageClass: "standard"
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      mountPath: /app/api/logs

@@ -1,0 +1,90 @@
+gitlab:
+  global:
+    edition: ce
+    
+    hosts:
+      domain: example.com
+      gitlab:
+        name: gitlab.example.com
+        https: true
+      registry:
+        name: registry.example.com
+        https: true
+      minio:
+        name: minio.example.com
+        https: true
+    
+    ingress:
+      enabled: true
+      class: nginx
+      configureCertmanager: true
+      tls:
+        enabled: true
+    
+    initialRootPassword:
+      secret: gitlab-initial-root-password
+      key: password
+    
+    psql:
+      password:
+        secret: gitlab-postgresql-password
+        key: postgresql-password
+    
+    redis:
+      password:
+        enabled: true
+        secret: gitlab-redis-password
+        key: password
+    
+    minio:
+      enabled: true
+      credentials:
+        secret: gitlab-minio-secret
+    
+    appConfig:
+      enableUsagePing: false
+      enableSeatLink: false
+      
+  certmanager:
+    install: false
+  
+  nginx-ingress:
+    enabled: false
+  
+  prometheus:
+    install: false
+  
+  gitlab-runner:
+    install: true
+    runners:
+      config: |
+        [[runners]]
+          [runners.kubernetes]
+            image = "ubuntu:20.04"
+            privileged = false
+          [[runners.kubernetes.volumes.empty_dir]]
+            name = "docker-certs"
+            mount_path = "/certs/client"
+            medium = "Memory"
+  
+  postgresql:
+    install: true
+    postgresqlPassword: "gitlab123456"
+    persistence:
+      enabled: true
+      size: 8Gi
+  
+  redis:
+    install: true
+    auth:
+      enabled: true
+      password: "redis123456"
+    master:
+      persistence:
+        enabled: true
+        size: 8Gi
+  
+  minio:
+    persistence:
+      enabled: true
+      size: 10Gi

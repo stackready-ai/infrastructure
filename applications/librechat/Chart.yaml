@@ -1,0 +1,10 @@
+apiVersion: v2
+name: librechat
+description: A Helm chart for LibreChat - Enhanced ChatGPT Clone
+type: application
+version: 0.1.0
+appVersion: "0.7.0"
+dependencies:
+  - name: librechat
+    version: "0.2.4"
+    repository: "https://bat-bs.github.io/helm-charts"
