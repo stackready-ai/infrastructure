@@ -14,7 +14,7 @@ influxdb2:
   
   persistence:
     enabled: true
-    storageClass: "standard"
+    storageClass: "do-block-storage"
     accessMode: ReadWriteOnce
     size: 50Gi
     mountPath: /var/lib/influxdb2

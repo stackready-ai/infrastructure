@@ -19,7 +19,6 @@ spec:
       valueFiles:
         - values.yaml
         - values-dev.yaml
-        - values-dev.yaml
   {{- if .Values.applications.nifi.syncPolicy }}
   syncPolicy:
     {{- toYaml .Values.applications.nifi.syncPolicy | nindent 4 }}

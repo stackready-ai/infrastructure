@@ -1,31 +1,31 @@
-nifi:
-  replicaCount: 1
-  
-  image:
-    repository: apache/nifi
-    tag: "1.23.2"
-    pullPolicy: IfNotPresent
-  
-  service:
-    type: LoadBalancer
-    httpPort: 8080
-    httpsPort: 8443
-  
-  persistence:
-    enabled: true
-    storageClass: "standard"
-    accessMode: ReadWriteOnce
-    size: 8Gi
-  
-  resources:
+# NiFi subchart values
+replicaCount: 1
+
+image:
+  repository: apache/nifi
+  tag: "1.23.2"
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  httpPort: 8080
+  httpsPort: 8443
+
+persistence:
+  enabled: true
+  storageClass: "do-block-storage"
+  accessMode: ReadWriteOnce
+  size: 8Gi
+
+resources:
     limits:
       cpu: 2
       memory: 4Gi
     requests:
       cpu: 1
       memory: 2Gi
-  
-  ingress:
+
+ingress:
     enabled: true
     className: nginx
     annotations:
@@ -37,13 +37,13 @@ nifi:
       - secretName: nifi-tls
         hosts:
           - nifi.example.com
-  
-  auth:
+
+auth:
     singleUser:
       username: admin
       password: admin123456
-  
-  properties:
+
+properties:
     webProxyHost: nifi.example.com
     isNode: false
     needClientAuth: false

@@ -48,6 +48,9 @@ gitlab:
   certmanager:
     install: false
   
+  certmanager-issuer:
+    email: anthony@stackready.ai
+  
   nginx-ingress:
     enabled: false
   

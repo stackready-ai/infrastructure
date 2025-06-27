@@ -40,21 +40,36 @@ help:
 	@echo "  make sync-staging   - Sync staging applications"
 	@echo "  make sync-prod      - Sync production applications"
 
+# Add all Helm repositories
+deps-repos:
+	@echo "Adding Helm repositories..."
+	@helm repo add cetic https://cetic.github.io/helm-charts --force-update
+	@helm repo add gitlab https://charts.gitlab.io/ --force-update
+	@helm repo add influxdata https://helm.influxdata.com/ --force-update
+	@helm repo add bat-bs https://bat-bs.github.io/helm-charts --force-update
+	@echo "Updating Helm repositories..."
+	@helm repo update
+	@echo "✅ Helm repositories added and updated!"
+
 # Individual dependency targets
 deps-nifi:
 	@echo "Building NiFi Helm dependencies..."
+	@helm repo add cetic https://cetic.github.io/helm-charts --force-update 2>/dev/null || true
 	@cd applications/base/nifi && helm dependency build
 
 deps-gitlab:
 	@echo "Building GitLab Helm dependencies..."
+	@helm repo add gitlab https://charts.gitlab.io/ --force-update 2>/dev/null || true
 	@cd applications/base/gitlab && helm dependency build
 
 deps-influxdb:
 	@echo "Building InfluxDB Helm dependencies..."
+	@helm repo add influxdata https://helm.influxdata.com/ --force-update 2>/dev/null || true
 	@cd applications/base/influxdb && helm dependency build
 
 deps-librechat:
 	@echo "Building LibreChat Helm dependencies..."
+	@helm repo add bat-bs https://bat-bs.github.io/helm-charts --force-update 2>/dev/null || true
 	@cd applications/base/librechat && helm dependency build
 
 deps-kubeflow:
@@ -64,7 +79,7 @@ deps-loadbalancer:
 	@echo "LoadBalancer is a local chart, no external dependencies to build"
 
 # Build all dependencies
-deps-all: deps-nifi deps-gitlab deps-influxdb deps-librechat deps-kubeflow deps-loadbalancer
+deps-all: deps-repos deps-nifi deps-gitlab deps-influxdb deps-librechat deps-kubeflow deps-loadbalancer
 	@echo "All Helm dependencies built successfully!"
 
 # Shorthand for deps-all
