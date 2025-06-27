@@ -6,14 +6,12 @@ namePrefix: staging-
 
 resources:
   - ../../base
-
-commonLabels:
-  environment: staging
-  
-patches:
   - nifi-values.yaml
   - gitlab-values.yaml
   - kubeflow-values.yaml
   - influxdb-values.yaml
   - librechat-values.yaml
   - loadbalancer-values.yaml
+
+commonLabels:
+  environment: staging

@@ -6,14 +6,12 @@ namePrefix: dev-
 
 resources:
   - ../../base
-
-commonLabels:
-  environment: dev
-  
-patches:
   - nifi-values.yaml
   - gitlab-values.yaml
   - kubeflow-values.yaml
   - influxdb-values.yaml
   - librechat-values.yaml
   - loadbalancer-values.yaml
+
+commonLabels:
+  environment: dev
