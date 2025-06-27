@@ -31,10 +31,8 @@ nifi:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
-      - host: nifi.example.com
-        paths:
-          - path: /
-            pathType: Prefix
+      - nifi.example.com
+    path: /
     tls:
       - secretName: nifi-tls
         hosts:

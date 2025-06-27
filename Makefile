@@ -1,4 +1,4 @@
-.PHONY: help test deploy-prereq argocd-password argocd-ui clean validate-config
+.PHONY: help test deploy-prereq deploy-root argocd-password argocd-ui clean validate-config
 
 # Default target
 help:
@@ -8,6 +8,7 @@ help:
 	@echo "Available targets:"
 	@echo "  make test           - Validate configuration files"
 	@echo "  make deploy-prereq  - Deploy ArgoCD prerequisites"
+	@echo "  make deploy-root    - Deploy root applications to ArgoCD"
 	@echo "  make argocd-password - Get ArgoCD admin password"
 	@echo "  make argocd-ui      - Port-forward ArgoCD UI"
 	@echo "  make clean          - Clean up ArgoCD deployment"
@@ -54,6 +55,13 @@ validate-config:
 deploy-prereq:
 	@echo "🚀 Deploying ArgoCD prerequisites..."
 	@./deploy/prereq.sh
+
+# Deploy root applications
+deploy-root:
+	@echo "🚀 Deploying root applications..."
+	@echo "📦 Installing root applications using Helm..."
+	@helm upgrade --install root-apps ./root -n argocd --create-namespace
+	@echo "✅ Root applications deployed successfully"
 
 # Get ArgoCD admin password
 argocd-password:

@@ -2,7 +2,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
   source:
-    repoURL: https://github.com/your-org/your-repo
+    repoURL: https://github.com/stackready-ai/infrastructure
     targetRevision: HEAD
   project: default
 
@@ -11,7 +11,7 @@ applications:
     enabled: true
     name: apache-nifi
     namespace: nifi
-    path: argocd-apps/applications/nifi
+    path: applications/nifi
     syncPolicy:
       automated:
         prune: true
@@ -23,7 +23,7 @@ applications:
     enabled: true
     name: gitlab
     namespace: gitlab
-    path: argocd-apps/applications/gitlab
+    path: applications/gitlab
     syncPolicy:
       automated:
         prune: true
@@ -35,7 +35,7 @@ applications:
     enabled: true
     name: kubeflow
     namespace: kubeflow
-    path: argocd-apps/applications/kubeflow
+    path: applications/kubeflow
     syncPolicy:
       automated:
         prune: true
@@ -47,7 +47,7 @@ applications:
     enabled: true
     name: influxdb
     namespace: influxdb
-    path: argocd-apps/applications/influxdb
+    path: applications/influxdb
     syncPolicy:
       automated:
         prune: true
@@ -59,7 +59,7 @@ applications:
     enabled: true
     name: librechat
     namespace: librechat
-    path: argocd-apps/applications/librechat
+    path: applications/librechat
     syncPolicy:
       automated:
         prune: true
