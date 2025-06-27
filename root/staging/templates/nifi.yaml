@@ -15,6 +15,10 @@ spec:
     path: {{ .Values.applications.nifi.path }}
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-staging.yaml
   {{- if .Values.applications.nifi.syncPolicy }}
   syncPolicy:
     {{- toYaml .Values.applications.nifi.syncPolicy | nindent 4 }}

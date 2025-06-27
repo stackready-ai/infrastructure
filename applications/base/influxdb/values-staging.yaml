@@ -1,0 +1,18 @@
+influxdb2:
+  persistence:
+    size: 8Gi
+  
+  ingress:
+    hostname: influxdb-staging.example.com
+    tls:
+      - secretName: influxdb-staging-tls
+        hosts:
+          - influxdb-staging.example.com
+  
+  resources:
+    limits:
+      cpu: 2
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi

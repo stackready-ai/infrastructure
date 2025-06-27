@@ -1,0 +1,28 @@
+loadbalancer:
+  name: stackready-dev-lb
+  namespace: kube-system
+  
+  service:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/do-loadbalancer-protocol: "tcp"
+      service.beta.kubernetes.io/do-loadbalancer-algorithm: "round_robin"
+      service.beta.kubernetes.io/do-loadbalancer-healthcheck-path: "/healthz"
+      service.beta.kubernetes.io/do-loadbalancer-healthcheck-protocol: "tcp"
+    
+    ports:
+      - name: http
+        port: 80
+        targetPort: 80
+        protocol: TCP
+      - name: https
+        port: 443
+        targetPort: 443
+        protocol: TCP
+    
+    selector:
+      app: nginx-ingress
+      component: controller
+  
+  externalTrafficPolicy: Local
+  sessionAffinity: None

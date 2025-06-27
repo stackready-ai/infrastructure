@@ -1,0 +1,24 @@
+gitlab:
+  global:
+    hosts:
+      domain: gitlab-staging.example.com
+    
+    gitaly:
+      persistence:
+        size: 20Gi
+    
+    postgresql:
+      persistence:
+        size: 8Gi
+    
+    redis:
+      persistence:
+        size: 4Gi
+  
+  gitlab-runner:
+    runners:
+      config: |
+        [[runners]]
+          [runners.kubernetes]
+          namespace = "gitlab-staging"
+          image = "alpine:latest"

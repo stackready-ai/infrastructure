@@ -11,6 +11,10 @@ spec:
   source:
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-dev.yaml
     path: applications/loadbalancer
   destination:
     server: {{ .Values.spec.destination.server }}

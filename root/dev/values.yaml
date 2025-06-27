@@ -13,34 +13,34 @@ applications:
     enabled: true
     name: apache-nifi-dev
     namespace: nifi-dev
-    path: applications/overlays/dev
+    path: applications/base/nifi
     
   gitlab:
     enabled: true
     name: gitlab-dev
     namespace: gitlab-dev
-    path: applications/overlays/dev
+    path: applications/base/gitlab
     
   kubeflow:
     enabled: true
     name: kubeflow-dev
     namespace: kubeflow-dev
-    path: applications/overlays/dev
+    path: applications/base/kubeflow
     
   influxdb:
     enabled: true
     name: influxdb-dev
     namespace: influxdb-dev
-    path: applications/overlays/dev
+    path: applications/base/influxdb
     
   librechat:
     enabled: true
     name: librechat-dev
     namespace: librechat-dev
-    path: applications/overlays/dev
+    path: applications/base/librechat
     
   loadbalancer:
     enabled: true
     name: loadbalancer-dev
     namespace: kube-system
-    path: applications/overlays/dev
+    path: applications/base/loadbalancer

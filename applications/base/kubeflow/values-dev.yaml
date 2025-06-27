@@ -1,0 +1,11 @@
+kubeflow:
+  domain: kubeflow-dev.example.com
+  
+  notebook:
+    defaultResources:
+      cpu: "0.5"
+      memory: "1Gi"
+  
+  pipeline:
+    persistence:
+      size: 10Gi

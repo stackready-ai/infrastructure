@@ -13,34 +13,34 @@ applications:
     enabled: true
     name: apache-nifi-staging
     namespace: nifi-staging
-    path: applications/overlays/staging
+    path: applications/base/nifi
     
   gitlab:
     enabled: true
     name: gitlab-staging
     namespace: gitlab-staging
-    path: applications/overlays/staging
+    path: applications/base/gitlab
     
   kubeflow:
     enabled: true
     name: kubeflow-staging
     namespace: kubeflow-staging
-    path: applications/overlays/staging
+    path: applications/base/kubeflow
     
   influxdb:
     enabled: true
     name: influxdb-staging
     namespace: influxdb-staging
-    path: applications/overlays/staging
+    path: applications/base/influxdb
     
   librechat:
     enabled: true
     name: librechat-staging
     namespace: librechat-staging
-    path: applications/overlays/staging
+    path: applications/base/librechat
     
   loadbalancer:
     enabled: true
     name: loadbalancer-staging
     namespace: kube-system
-    path: applications/overlays/staging
+    path: applications/base/loadbalancer

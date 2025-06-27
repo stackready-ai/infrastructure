@@ -1,0 +1,24 @@
+nifi:
+  replicaCount: 3
+  
+  resources:
+    limits:
+      cpu: 4
+      memory: 8Gi
+    requests:
+      cpu: 2
+      memory: 4Gi
+  
+  persistence:
+    size: 16Gi
+  
+  ingress:
+    hosts:
+      - nifi.example.com
+    tls:
+      - secretName: nifi-tls
+        hosts:
+          - nifi.example.com
+  
+  properties:
+    webProxyHost: nifi.example.com
