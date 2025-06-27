@@ -1,0 +1,6 @@
+dependencies:
+- name: librechat
+  repository: https://bat-bs.github.io/helm-charts
+  version: 1.8.10
+digest: sha256:f7856680cadfae568ccc16f22cc9ae6e6e6e2e3b00fd98852f8d3de8b8f84a08
+generated: "2025-06-27T12:05:01.968453357-05:00"

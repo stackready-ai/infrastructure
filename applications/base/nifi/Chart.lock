@@ -1,0 +1,6 @@
+dependencies:
+- name: nifi
+  repository: https://cetic.github.io/helm-charts
+  version: 1.1.4
+digest: sha256:92ac869198807ba7607298b593807dd9ff1b7195d8a68c2bbcd9a1ff76dab242
+generated: "2025-06-27T12:03:57.515102195-05:00"
